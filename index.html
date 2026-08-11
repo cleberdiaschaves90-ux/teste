@@ -3,92 +3,85 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Meu Blog Tech</title>
+    <title>Semáforo Interativo</title>
     <style>
       body {
         font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
         background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
       }
-      header {
-        background-color: #183c63;
-        color: #ffffff;
-        text-align: center;
-        max-width: 800px;
-        margin: 20px auto;
-        border: 5px solid #cf1010;
-        padding: 16px;
-      }
-      main {
-        background-color: #ffffff;
-        color: #183c63;
-        max-width: 800px;
-        margin: 20px auto;
+
+      .semaforo {
+        background-color: #222;
+        width: 120px;
         padding: 20px;
-        border: 1px solid #ddd;
+        border-radius: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
       }
-      .post {
-        margin-bottom: 20px;
-      }
-      .autor {
-        font-style: italic;
-        color: #555;
-      }
-      /* Estilo simples para os botões de reação */
-      button {
-        font-size: 18px;
-        padding: 8px 12px;
-        margin-right: 10px;
-        cursor: pointer;
-        background-color: #fcfcfc;
-        border: 1px solid #ccc;
-        border-radius: 5px;
+
+      .luz {
+        width: 80px;
+        height: 80px;
+        background-color: #444;
+        border-radius: 50%;
+        transition:
+          background-color 0.3s ease,
+          box-shadow 0.3s ease;
       }
     </style>
+    <!-- Tag de fechamento corrigida aqui -->
   </head>
   <body>
-    <header>
-      <h1>Meu Blog Tech</h1>
-      <p>Vou compartilhar conhecimentos sobre tecnologia e programação</p>
-    </header>
-
-    <main>
-      <section class="post">
-        <img
-          src="https://recreio.com.br/wp-content/uploads/2024/05/goku_capa-1.jpg"
-          alt="Imagem de destaque do post"
-          style="width: 100%; height: auto"
-        />
-        <h2>Meu primeiro post</h2>
-        <p class="autor">Por: Cleber Dias Chaves</p>
-        <p>
-          Boas-vindas ao meu novo blog! Aqui vou compartilhar dicas de
-          programação e curiosidades na área de tecnologia.
-        </p>
-
-        <!-- Botões de reação corrigidos com o contador iniciando em 0 dentro de um span -->
-        <button class="botao-reacao">😀 <span>0</span></button>
-        <button class="botao-reacao">
-          <button class="botao-reacao">❤️ <span>0</span></button> <span>0</span>
-        </button>
-      </section>
-    </main>
+    <div class="semaforo">
+      <div id="vermelho" class="luz"></div>
+      <div id="amarelo" class="luz"></div>
+      <div id="verde" class="luz"></div>
+    </div>
 
     <script>
-      // Seleciona todos os botões que têm a classe 'botao-reacao'
-      const botoes = document.querySelectorAll(".botao-reacao");
+      const luzVermelha = document.getElementById("vermelho");
+      const luzAmarela = document.getElementById("amarelo");
+      const luzVerde = document.getElementById("verde");
 
-      // Passa por cada botão adicionando o evento de clique
-      botoes.forEach((botao) => {
-        botao.addEventListener("click", function () {
-          console.log("Fui clicado!");
-          // Procura a tag <span> de número dentro do botão que foi clicado
-          let texto = botao.querySelector("span");
-          // Soma +1 ao valor atual do texto
-          texto.textContent = parseInt(texto.textContent) + 1;
-        });
-      });
+      function apagarTodas() {
+        luzVermelha.style.backgroundColor = "#444";
+        luzVermelha.style.boxShadow = "none";
+
+        luzAmarela.style.backgroundColor = "#444";
+        luzAmarela.style.boxShadow = "none";
+
+        luzVerde.style.backgroundColor = "#444";
+        luzVerde.style.boxShadow = "none";
+      }
+
+      function iniciarSemaforo() {
+        apagarTodas();
+        luzVermelha.style.backgroundColor = "#ff3333";
+        luzVermelha.style.boxShadow = "0 0 30px #ff3333";
+
+        setTimeout(() => {
+          apagarTodas();
+          luzVerde.style.backgroundColor = "#33ff33";
+          luzVerde.style.boxShadow = "0 0 30px #33ff33";
+        }, 4000);
+
+        setTimeout(() => {
+          apagarTodas();
+          luzAmarela.style.backgroundColor = "#ffcc00";
+          luzAmarela.style.boxShadow = "0 0 30px #ffcc00";
+        }, 7000);
+      }
+
+      iniciarSemaforo();
+      setInterval(iniciarSemaforo, 9000);
     </script>
   </body>
 </html>
